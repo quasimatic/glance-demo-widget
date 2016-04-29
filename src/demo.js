@@ -1,6 +1,8 @@
 import glanceSelector from "glance-selector";
 import $ from 'jquery';
 
+window.glanceSelector = glanceSelector;
+
 $(function(){
     $("<div><input id='glance-selector'/></div>")
         .prependTo("body")
