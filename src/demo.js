@@ -16,7 +16,6 @@ $(function(){
 
     function highlight(selector) {
         activeHighlighted.each(function() {
-            console.log($(this).data("original-background-color"))
             $(this).css("background-color", $(this).data("original-background-color"))
         });
 
