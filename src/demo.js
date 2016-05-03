@@ -1,5 +1,6 @@
 import glanceSelector from "glance-selector";
 import $ from 'jquery';
+import randomColor from 'randomcolor';
 
 window.glanceSelector = glanceSelector;
 
