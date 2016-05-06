@@ -1,10 +1,22 @@
 import glanceSelector from "glance-selector";
+import {Parser} from "glance-selector";
 import $ from 'jquery';
 import randomColor from 'randomcolor';
 
 window.glanceSelector = glanceSelector;
 
 var activeHighlighted = $();
+
+function isDescendant(parent, child) {
+    let node = child.parentNode;
+    while (node != null) {
+        if (node == parent) {
+            return true;
+        }
+        node = node.parentNode;
+    }
+    return false;
+};
 
 function clearHighlighted() {
     activeHighlighted.each(function () {
@@ -40,13 +52,17 @@ glanceSelector.addExtension({
         })(selector);
     },
     afterFilter: function (elements) {
-        highlightElements(elements);
-        return elements;
+        var nonDemoElements = elements.filter(function(e){
+            return !isDescendant($('#glance-demo')[0], e)
+        });
+
+        highlightElements(nonDemoElements);
+        return nonDemoElements;
     }
 });
 
 $(function () {
-    var toolbar = $("<div></div>")
+    var toolbar = $("<div id='glance-demo'></div>")
         .prependTo("body")
         .css({
             "height": "40px"
