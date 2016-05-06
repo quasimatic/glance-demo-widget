@@ -1,7 +1,5 @@
 import glanceSelector from "glance-selector";
-import {Parser} from "glance-selector";
 import $ from 'jquery';
-import randomColor from 'randomcolor';
 
 window.glanceSelector = glanceSelector;
 
@@ -31,9 +29,7 @@ function highlightElements(elements) {
 
     activeHighlighted.each(function () {
         $(this).data("original-background-color", $(this).css('backgroundColor'))
-    }).css("background-color", randomColor({
-        luminosity: "light"
-    }));
+    }).css("background-color", "#FACC0D");
 }
 
 glanceSelector.addExtension({
@@ -51,8 +47,8 @@ glanceSelector.addExtension({
             }
         })(selector);
     },
-    afterFilter: function (elements) {
-        var nonDemoElements = elements.filter(function(e){
+    afterFilter: function (elements, {scope}) {
+        var nonDemoElements = elements.filter(function (e) {
             return !isDescendant($('#glance-demo')[0], e)
         });
 
