@@ -61,7 +61,8 @@ $(function () {
     var toolbar = $("<div id='glance-demo'></div>")
         .prependTo("body")
         .css({
-            "height": "40px"
+            "height": "40px",
+            "margin-bottom": "10px"
         });
 
     var background = $("<div></div>")
