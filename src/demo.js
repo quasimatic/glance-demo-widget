@@ -42,7 +42,7 @@ glanceSelector.addExtension({
                 }, 1);
             }
             else {
-                if (!alreadySet && $("#glance-selector").val() != text) {
+                if (!alreadySet) {
                     $("#glance-selector").val(text);
                     alreadySet = true
                 }
