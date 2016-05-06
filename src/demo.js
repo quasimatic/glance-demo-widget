@@ -4,6 +4,7 @@ import $ from 'jquery';
 window.glanceSelector = glanceSelector;
 
 var activeHighlighted = $();
+var alreadySet = false;
 
 function isDescendant(parent, child) {
     let node = child.parentNode;
@@ -41,8 +42,9 @@ glanceSelector.addExtension({
                 }, 1);
             }
             else {
-                if ($("#glance-selector").val() != text) {
+                if (!alreadySet && $("#glance-selector").val() != text) {
                     $("#glance-selector").val(text);
+                    alreadySet = true
                 }
             }
         })(selector);
