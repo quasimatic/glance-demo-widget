@@ -7,7 +7,7 @@ window.glanceSelector = glanceSelector;
 var activeHighlighted = $();
 
 function clearHighlighted() {
-    activeHighlighted.each(function() {
+    activeHighlighted.each(function () {
         $(this).css("background-color", $(this).data("original-background-color"))
     });
 }
@@ -17,36 +17,59 @@ function highlightElements(elements) {
 
     activeHighlighted = $(elements)
 
-    activeHighlighted.each(function() {
+    activeHighlighted.each(function () {
         $(this).data("original-background-color", $(this).css('backgroundColor'))
     }).css("background-color", randomColor({
         luminosity: "light"
-    }))
+    }));
 }
 
 glanceSelector.addExtension({
-    beforeAll: function(selector){
-
+    beforeAll: function (selector) {
         (function setDemoText(text) {
-            if($("#glance-selector").length == 0) {
-                setTimeout(function() { setDemoText(text) }, 250);
+            if ($("#glance-selector").length == 0) {
+                setTimeout(function () {
+                    setDemoText(text)
+                }, 1);
             }
             else {
-                $("#glance-selector").val(text);
+                if ($("#glance-selector").val() != text) {
+                    $("#glance-selector").val(text);
+                }
             }
         })(selector);
     },
-    afterFilter: function(target, elements) {
+    afterFilter: function (elements) {
         highlightElements(elements);
         return elements;
     }
 });
 
-$(function() {
-    $("<div><input id='glance-selector'/></div>")
+$(function () {
+    var toolbar = $("<div></div>")
         .prependTo("body")
-        .css({})
-        .keyup(function() {
+        .css({
+            "height": "40px"
+        });
+
+    var background = $("<div></div>")
+        .prependTo(toolbar)
+        .css({
+            "position": "fixed",
+            "height": "35px",
+            "top": 0,
+            "left": 0,
+            "right": 0
+        });
+
+    $("<input id='glance-selector'/>")
+        .prependTo(background)
+        .css({
+            "width": "100%",
+            "font-size": "20px",
+            "padding": "4px"
+        })
+        .keyup(function () {
             var selector = $("#glance-selector").val();
             if (selector == "")
                 clearHighlighted();
