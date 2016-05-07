@@ -3,7 +3,6 @@ import $ from 'jquery';
 
 window.glanceSelector = glanceSelector;
 
-var activeHighlighted = $();
 var alreadySet = false;
 
 function isDescendant(parent, child) {
@@ -18,18 +17,15 @@ function isDescendant(parent, child) {
 };
 
 function clearHighlighted() {
-    activeHighlighted.each(function () {
-        $(this).css("background-color", $(this).data("original-background-color"))
+    $('*[data-original-background-color]').each(function () {
+            $(this).css("background-color", $(this).data("original-background-color"))
+            $(this).removeAttr("data-original-background-color")
     });
 }
 
 function highlightElements(elements) {
-    clearHighlighted();
-
-    activeHighlighted = $(elements)
-
-    activeHighlighted.each(function () {
-        $(this).data("original-background-color", $(this).css('backgroundColor'))
+    $(elements).each(function () {
+        $(this).attr("data-original-background-color", $(this).css('backgroundColor'))
     }).css("background-color", "#FACC0D");
 }
 
@@ -49,7 +45,11 @@ glanceSelector.addExtension({
             }
         })(selector);
     },
-    
+
+    beforeScope: function () {
+        clearHighlighted();
+    },
+
     afterFilter: function (elements, {scope}) {
         var nonDemoElements = elements.filter(function (e) {
             return !isDescendant($('#glance-demo')[0], e)
