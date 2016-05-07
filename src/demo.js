@@ -49,13 +49,18 @@ glanceSelector.addExtension({
             }
         })(selector);
     },
+    
     afterFilter: function (elements, {scope}) {
         var nonDemoElements = elements.filter(function (e) {
             return !isDescendant($('#glance-demo')[0], e)
         });
 
-        highlightElements(nonDemoElements);
         return nonDemoElements;
+    },
+
+    afterPositional: function (elements) {
+        highlightElements(elements);
+        return elements;
     }
 });
 
