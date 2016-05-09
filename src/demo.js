@@ -81,7 +81,7 @@ $(function () {
             "left": 0,
             "right": 0,
             "background-color": "#3D5980",
-            "padding": "4px"
+            "padding": "6px 6px 6px 4px"
         });
 
     var label = $("<label>Glance:&nbsp;</label>")
