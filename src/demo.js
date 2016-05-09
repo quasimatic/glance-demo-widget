@@ -25,7 +25,8 @@ function clearHighlighted() {
 
 function highlightElements(elements) {
     $(elements).each(function () {
-        $(this).attr("data-original-background-color", $(this).css('backgroundColor'))
+        if(!$(this).is("*[data-original-background-color]"))
+            $(this).attr("data-original-background-color", $(this).css('backgroundColor'))
     }).css("background-color", "#FACC0D");
 }
 
