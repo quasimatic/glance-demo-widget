@@ -69,14 +69,15 @@ $(function () {
         .prependTo("body")
         .css({
             "height": "40px",
-            "margin-bottom": "10px"
+            "margin-bottom": "10px",
+            "font-family": "Helvetica Neue",
+            "font-size": "20px"
         });
 
     var background = $("<div></div>")
         .appendTo(toolbar)
         .css({
             "position": "fixed",
-            "height": "23px",
             "top": 0,
             "left": 0,
             "right": 0,
@@ -104,7 +105,7 @@ $(function () {
         .appendTo(wrapper)
         .css({
             "font-size": "20px",
-            "padding": "0px 0px 0px 4px",
+            "padding": "0px 0px 1px 4px",
             "width": "100%",
             "outline-width": 0,
             "border": 0
