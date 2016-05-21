@@ -4,6 +4,7 @@ import $ from 'jquery';
 window.glanceSelector = glanceSelector;
 
 var alreadySet = false;
+var previousSelector = "";
 
 function isDescendant(parent, child) {
     let node = child.parentNode;
@@ -18,50 +19,38 @@ function isDescendant(parent, child) {
 
 function clearHighlighted() {
     $('*[data-original-background-color]').each(function () {
-        $(this).css("background-color", $(this).data("original-background-color"))
-        $(this).removeAttr("data-original-background-color")
+        $(this).css("background-color", $(this).data("original-background-color"));
+        $(this).removeAttr("data-original-background-color");
     });
 }
 
 function highlightElements(elements) {
     $(elements).each(function () {
-        if(!$(this).is("*[data-original-background-color]"))
-            $(this).attr("data-original-background-color", $(this).css('backgroundColor'))
+        if (!$(this).is("*[data-original-background-color]"))
+            $(this).attr("data-original-background-color", $(this).css('backgroundColor'));
     }).css("background-color", "#FACC0D");
 }
 
 glanceSelector.addExtension({
     beforeAll: function (selector) {
-        (function setDemoText(text) {
-            if ($("#glance-selector").length == 0) {
-                setTimeout(function () {
-                    setDemoText(text)
-                }, 1);
-            }
-            else {
-                if (!alreadySet) {
-                    $("#glance-selector").val(text);
-                    alreadySet = true
-                }
-            }
-        })(selector);
-    },
-
-    beforeScope: function () {
         clearHighlighted();
+
+        previousSelector = selector;
+        $("#glance-selector").val("");
     },
 
-    afterFilter: function (elements, {scope}) {
+    afterAll: function ({elements}) {
+        highlightElements(elements);
+        
+        $("#glance-selector").val(previousSelector);
+    },
+
+    afterFilters: function (elements, {scope}) {
         var nonDemoElements = elements.filter(function (e) {
-            return !isDescendant($('#glance-demo')[0], e)
+            return !isDescendant($('#glance-demo')[0], e);
         });
 
         return nonDemoElements;
-    },
-
-    afterPositional: function (elements) {
-        highlightElements(elements);
-        return elements;
     }
 });
 
@@ -113,9 +102,27 @@ $(function () {
         })
         .keyup(function () {
             var selector = $("#glance-selector").val();
+            if (previousSelector == selector) return;
+
+            previousSelector = selector;
+            
             if (selector == "")
                 clearHighlighted();
             else
                 glanceSelector(selector);
         });
 });
+
+(function setDemoText() {
+    if ($("#glance-selector").length == 0) {
+        setTimeout(function () {
+            setDemoText(previousSelector);
+        }, 1);
+    }
+    else {
+        if (!alreadySet) {
+            $("#glance-selector").val(previousSelector);
+            alreadySet = true;
+        }
+    }
+})();

@@ -8,4 +8,4 @@ glanceSelector.addExtension({
     }
 });
 
-glanceSelector("name");
+glanceSelector("input");
