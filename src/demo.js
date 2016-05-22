@@ -108,8 +108,15 @@ $(function () {
             
             if (selector == "")
                 clearHighlighted();
-            else
-                glanceSelector(selector);
+            else {
+                try {
+                    glanceSelector(selector);
+                }
+                catch(error){
+                    $("#glance-selector").val(previousSelector);
+                    console.error(error.message);
+                }
+            }
         });
 });
 
