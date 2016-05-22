@@ -55,11 +55,14 @@ glanceSelector.addExtension({
 });
 
 $(function () {
+    $("body").css({
+        "padding-top": "50px"
+    });
+
     var toolbar = $("<div id='glance-demo'></div>")
         .prependTo("body")
+        .addClass("navbar navbar-default navbar-fixed-top")
         .css({
-            "height": "40px",
-            "margin-bottom": "10px",
             "font-family": "Helvetica Neue",
             "font-size": "20px"
         });
@@ -72,7 +75,7 @@ $(function () {
             "left": 0,
             "right": 0,
             "background-color": "#3D5980",
-            "padding": "6px 6px 6px 4px"
+            "padding": "10px 6px 10px 4px"
         });
 
     var label = $("<label>Glance:&nbsp;</label>")
