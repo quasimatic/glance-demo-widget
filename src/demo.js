@@ -5,6 +5,7 @@ window.glanceSelector = glanceSelector;
 
 var alreadySet = false;
 var previousSelector = "";
+var changeSelector = true;
 
 function isDescendant(parent, child) {
     let node = child.parentNode;
@@ -35,14 +36,20 @@ glanceSelector.addExtension({
     beforeAll: function (selector) {
         clearHighlighted();
 
-        previousSelector = selector;
-        $("#glance-selector").val("");
+        if(changeSelector) {
+            previousSelector = selector;
+            changeSelector = false;
+        }
     },
 
     afterAll: function ({elements}) {
         highlightElements(elements);
-        
-        $("#glance-selector").val(previousSelector);
+
+        if($("#glance-selector").val() != previousSelector) {
+            $("#glance-selector").val(previousSelector);
+        }
+
+        changeSelector = true;
     },
 
     afterFilters: function (elements, {scope}) {
