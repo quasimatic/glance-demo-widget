@@ -33,7 +33,7 @@ function highlightElements(elements) {
 }
 
 glanceSelector.addExtension({
-    beforeAll: function (selector) {
+    beforeAll: function ({selector}) {
         clearHighlighted();
 
         if(changeSelector) {
@@ -52,7 +52,7 @@ glanceSelector.addExtension({
         changeSelector = true;
     },
 
-    afterFilters: function (elements, {scope}) {
+    afterFilters: function ({elements, scope}) {
         var nonDemoElements = elements.filter(function (e) {
             return !isDescendant($('#glance-demo')[0], e);
         });
