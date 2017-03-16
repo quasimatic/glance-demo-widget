@@ -174,8 +174,6 @@ $(function() {
                     }
                 }
             });
-
-        glanceSelector('hello');
     });
 
 });
