@@ -114,7 +114,8 @@ $(function() {
                 'width': '100%',
                 'outline-width': 0,
                 'border': 0,
-                'color': '#27343E'
+                'color': '#27343E',
+                'height': '33px !important'
             })
             .keyup(function() {
                 var selector = $('#glance-selector').val();
