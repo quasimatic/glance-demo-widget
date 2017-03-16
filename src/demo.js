@@ -38,8 +38,8 @@ function highlightKnownElements() {
             'position': 'fixed',
             'top': position.top,
             'left': position.left,
-            'height': $(this).height(),
-            'width': $(this).width(),
+            'height': $(this).outerHeight(),
+            'width': $(this).outerWidth(),
             'background-color': '#F17537',
             'opacity': '.4'
         });
