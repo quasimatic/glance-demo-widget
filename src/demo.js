@@ -3,6 +3,7 @@ import $ from 'jquery';
 var alreadySet = false;
 var previousSelector = '';
 var changeSelector = true;
+var elementsToHighlight;
 
 function isDescendant(parent, child) {
     let node = child.parentNode;
@@ -16,24 +17,62 @@ function isDescendant(parent, child) {
 };
 
 function clearHighlighted() {
-    $('*[data-original-background-color]').each(function() {
-        $(this).css('background-color', $(this).data('original-background-color'));
-        $(this).removeAttr('data-original-background-color');
-    });
+    elementsToHighlight = null;
+    $('#glance-demo-highlights').remove();
 }
 
 function highlightElements(elements) {
-    $(elements).each(function() {
-        if (!$(this).is('*[data-original-background-color]'))
-            $(this).attr('data-original-background-color', $(this).css('backgroundColor'));
-    }).css('background-color', '#F17537');
+    elementsToHighlight = elements;
+    highlightKnownElements();
 }
+
+function highlightKnownElements() {
+    $('#glance-demo-highlights').remove();
+
+    let highlights = $('<div id=\'glance-demo-highlights\'></div>').appendTo('body');
+
+    $(elementsToHighlight).each(function() {
+        // if(!visible(this)) return;
+        let position = getPosition(this);
+        let highlight = $('<div></div>').css({
+            'position': 'fixed',
+            'top': position.top,
+            'left': position.left,
+            'height': $(this).height(),
+            'width': $(this).width(),
+            'background-color': '#F17537',
+            'opacity': '.4'
+        });
+
+        highlights.append(highlight);
+    });
+}
+
+function getPosition(element) {
+    var top = $(element).offset().top; //get the offset top of the element
+    var left = $(element).offset().left; //get the offset top of the element
+    return {top: top - $(window).scrollTop(), left: left - $(window).scrollLeft()}; //position of the ele w.r.t window
+}
+
+function visible(element, fullyInView) {
+    var pageTop = $(window).scrollTop();
+    var pageBottom = pageTop + $(window).height();
+    var elementTop = $(element).offset().top;
+    var elementBottom = elementTop + $(element).height();
+
+    if (fullyInView === true) {
+        return ((pageTop < elementTop) && (pageBottom > elementBottom));
+    } else {
+        return ((elementTop <= pageBottom) && (elementBottom >= pageTop));
+    }
+}
+
+$(window).scroll(highlightKnownElements);
 
 $(function() {
     $.getScript('http://quasimatic.org/glance-dom-selector/dist/glance-selector.js', function(data, textStatus, jqxhr) {
         glanceSelector.addExtension({
             beforeAll: function({reference}) {
-                console.log('here');
                 clearHighlighted();
 
                 if (changeSelector) {
@@ -115,7 +154,7 @@ $(function() {
                 'outline-width': 0,
                 'border': 0,
                 'color': '#27343E',
-                'height': '33px !important'
+                'height': '33px'
             })
             .keyup(function() {
                 var selector = $('#glance-selector').val();
@@ -135,6 +174,8 @@ $(function() {
                     }
                 }
             });
+
+        glanceSelector('hello');
     });
 
 });
@@ -152,3 +193,4 @@ $(function() {
         }
     }
 })();
+
