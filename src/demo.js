@@ -6,13 +6,13 @@ var changeSelector = true;
 var elementsToHighlight;
 
 window.glanceSelector = function(reference, config) {
-	window.glanceSelectorIntervalID = setInterval(function(){
-		if(window.glanceSelector.setLogLevel) {
+	window.glanceSelectorIntervalID = setInterval(function() {
+		if (window.glanceSelector.setLogLevel) {
 			clearInterval(window.glanceSelectorIntervalID);
 			glanceSelector(reference, config);
 		}
-	},1000);
-}
+	}, 1000);
+};
 
 function isDescendant(parent, child) {
 	let node = child.parentNode;
@@ -58,9 +58,9 @@ function highlightKnownElements() {
 }
 
 function getPosition(element) {
-	var top = $(element).offset().top; //get the offset top of the element
-	var left = $(element).offset().left; //get the offset top of the element
-	return {top: top - $(window).scrollTop(), left: left - $(window).scrollLeft()}; //position of the ele w.r.t window
+	var top = $(element).offset().top;
+	var left = $(element).offset().left;
+	return {top: top - $(window).scrollTop(), left: left - $(window).scrollLeft()};
 }
 
 function visible(element, fullyInView) {
@@ -76,7 +76,8 @@ function visible(element, fullyInView) {
 	}
 }
 
-$(window).scroll(highlightKnownElements);
+$(window).scroll(highlightKnownElements)
+	.resize(highlightKnownElements)
 
 $(function() {
 	$.getScript('http://quasimatic.org/glance-dom-selector/dist/glance-selector.js', function(data, textStatus, jqxhr) {
