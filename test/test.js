@@ -1,4 +1,5 @@
-glanceSelector.addExtension({
+console.log(glanceDom)
+glanceDom.addExtension({
     labels: {
         "birthdate": {
             locate: function(label, scope, data) {
@@ -8,4 +9,4 @@ glanceSelector.addExtension({
     }
 });
 
-glanceSelector("input");
+glanceDom("input");

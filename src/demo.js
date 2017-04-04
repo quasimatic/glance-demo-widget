@@ -1,23 +1,23 @@
 import $ from 'jquery';
 
-var alreadySet = false;
-var previousSelector = '';
-var changeSelector = true;
-var elementsToHighlight;
+let alreadySet = false;
+let previousSelector = '';
+let changeSelector = true;
+let elementsToHighlight;
 
-window.glanceSelector = function(reference, config) {
-	window.glanceSelectorIntervalID = setInterval(function() {
-		if (window.glanceSelector.setLogLevel) {
-			clearInterval(window.glanceSelectorIntervalID);
-			glanceSelector(reference, config);
+window.glanceDOM = function(reference, config) {
+	window.glanceDOMIntervalID = setInterval(function() {
+		if (window.glanceDOM.setLogLevel) {
+			clearInterval(window.glanceDOMIntervalID);
+			glanceDOM(reference, config);
 		}
 	}, 1000);
 };
 
 function isDescendant(parent, child) {
 	let node = child.parentNode;
-	while (node != null) {
-		if (node == parent) {
+	while (node !== null) {
+		if (node === parent) {
 			return true;
 		}
 		node = node.parentNode;
@@ -80,8 +80,8 @@ $(window).scroll(highlightKnownElements)
 	.resize(highlightKnownElements)
 
 $(function() {
-	$.getScript('http://quasimatic.org/glance-dom-selector/dist/glance-selector.js', function(data, textStatus, jqxhr) {
-		glanceSelector.addExtension({
+	$.getScript('http://quasimatic.org/glance-dom/dist/glance-dom.js', function(data, textStatus, jqxhr) {
+		glanceDOM.addExtension({
 			beforeAll: function({reference}) {
 				clearHighlighted();
 
@@ -94,8 +94,8 @@ $(function() {
 			afterAll: function({elements}) {
 				highlightElements(elements);
 
-				if ($('#glance-selector').val() != previousSelector) {
-					$('#glance-selector').val(previousSelector);
+				if ($('#glance-dom').val() != previousSelector) {
+					$('#glance-dom').val(previousSelector);
 				}
 
 				changeSelector = true;
@@ -155,7 +155,7 @@ $(function() {
 				'overflow': 'hidden'
 			});
 
-		$(`<input id='glance-selector'/>`)
+		$(`<input id='glance-dom'/>`)
 			.appendTo(wrapper)
 			.css({
 				'font-size': '28px',
@@ -167,7 +167,7 @@ $(function() {
 				'height': '33px'
 			})
 			.keyup(function() {
-				var selector = $('#glance-selector').val();
+				var selector = $('#glance-dom').val();
 				if (previousSelector == selector) return;
 
 				previousSelector = selector;
@@ -176,10 +176,10 @@ $(function() {
 					clearHighlighted();
 				else {
 					try {
-						glanceSelector(selector, {containerElements: [$('#glance-demo-content')[0]]});
+						glanceDOM(selector, {containerElements: [$('#glance-demo-content')[0]]});
 					}
 					catch (error) {
-						$('#glance-selector').val(previousSelector);
+						$('#glance-dom').val(previousSelector);
 						console.error(error.message);
 					}
 				}
@@ -189,14 +189,14 @@ $(function() {
 });
 
 (function setDemoText() {
-	if ($('#glance-selector').length == 0) {
+	if ($('#glance-dom').length === 0) {
 		setTimeout(function() {
 			setDemoText(previousSelector);
 		}, 1);
 	}
 	else {
 		if (!alreadySet) {
-			$('#glance-selector').val(previousSelector);
+			$('#glance-dom').val(previousSelector);
 			alreadySet = true;
 		}
 	}

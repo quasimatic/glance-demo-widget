@@ -3,7 +3,7 @@ var webpack = require('webpack');
 module.exports = {
     entry: "./src/demo",
     output: {
-        path: '.',
+        path: __dirname,
         filename: 'demo.js'
     },
     plugins: [
