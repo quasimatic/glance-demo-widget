@@ -80,7 +80,7 @@ $(window).scroll(highlightKnownElements)
 	.resize(highlightKnownElements)
 
 $(function() {
-	$.getScript('http://quasimatic.org/glance-dom/dist/glance-dom.js', function(data, textStatus, jqxhr) {
+	$.getScript('https://quasimatic.org/glance-dom/dist/glance-dom.js', function(data, textStatus, jqxhr) {
 		glanceDOM.addExtension({
 			beforeAll: function({reference}) {
 				clearHighlighted();
