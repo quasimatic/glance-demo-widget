@@ -94,9 +94,9 @@ $(function() {
 			afterAll: function({elements}) {
 				highlightElements(elements);
 
-				if ($('#glance-dom').val() != previousSelector) {
-					$('#glance-dom').val(previousSelector);
-				}
+				// if ($('#glance-dom').val() != previousSelector) {
+				// 	$('#glance-dom').val(previousSelector);
+				// }
 
 				changeSelector = true;
 			},
